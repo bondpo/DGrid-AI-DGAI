@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGrid AI (DGAI) 全景投研报告与获利指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-100 antialiased min-h-screen flex flex-col overflow-x-hidden">
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 blur-[120px]"></div>
+        <div class="absolute top-[40%] left-[30%] w-[40%] h-[40%] rounded-full bg-emerald-900/5 blur-[150px]"></div>
+    </div>
+
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0B0D17]/80 border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-500 flex items-center justify-center p-[2px] shadow-lg shadow-indigo-500/10">
+                    <div class="w-full h-full bg-[#0B0D17] rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">DGrid AI</span>
+                    <span class="text-[10px] block text-emerald-400 font-mono tracking-widest uppercase">Research</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#hero" class="hover:text-purple-400 transition-colors">首屏</a>
+                <a href="#concept" class="hover:text-purple-400 transition-colors">核心定位</a>
+                <a href="#dashboard" class="hover:text-purple-400 transition-colors">数据看板</a>
+                <a href="#tokenomics" class="hover:text-purple-400 transition-colors">代币经济</a>
+                <a href="#profit" class="hover:text-purple-400 transition-colors">获利路径</a>
+                <a href="#comparison" class="hover:text-purple-400 transition-colors">竞品对比</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <button id="btn-mock-share" class="px-4 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center space-x-2 text-xs transition-all">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5 text-slate-300"></i>
+                    <span>分享报告</span>
+                </button>
+                <button id="btn-mock-pdf" class="px-4 h-9 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 flex items-center space-x-2 text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-white"></i>
+                    <span>生成 PDF</span>
+                </button>
+            </div>
+
+            <button id="btn-menu-toggle" class="md:hidden p-2 text-slate-400 hover:text-white transition-colors" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+
+    <div id="drawer-menu" class="fixed inset-0 z-40 bg-[#0B0D17]/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 md:hidden flex flex-col justify-between p-6">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b border-white/5">
+                <span class="font-bold text-lg bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">DGrid AI 导航</span>
+                <button id="btn-drawer-close" class="p-2 text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-6 pt-8 text-lg font-medium text-slate-300">
+                <a href="#hero" class="drawer-link hover:text-purple-400 transition-colors">首屏概要</a>
+                <a href="#concept" class="drawer-link hover:text-purple-400 transition-colors">核心定位</a>
+                <a href="#dashboard" class="drawer-link hover:text-purple-400 transition-colors">核心数据</a>
+                <a href="#tokenomics" class="drawer-link hover:text-purple-400 transition-colors">代币分配</a>
+                <a href="#profit" class="drawer-link hover:text-purple-400 transition-colors">获利路径</a>
+                <a href="#comparison" class="drawer-link hover:text-purple-400 transition-colors">竞品对比</a>
+            </nav>
+        </div>
+        <div class="space-y-4 pb-8">
+            <button id="btn-drawer-share" class="w-full h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center space-x-2 text-sm font-medium">
+                <i data-lucide="share-2" class="w-4 h-4"></i>
+                <span>分享报告</span>
+            </button>
+            <button id="btn-drawer-pdf" class="w-full h-12 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center space-x-2 text-sm font-semibold shadow-lg shadow-indigo-600/20">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>下载 PDF 报告</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="flex-grow z-10">
+        <section id="hero" class="relative pt-12 pb-20 md:py-32 flex flex-col items-center justify-center px-4 overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(79,70,229,0.05),transparent_60%)]"></div>
+            
+            <div class="text-center max-w-4xl mx-auto space-y-6 relative z-10">
+                <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-mono font-bold text-indigo-300 tracking-wider">DEPIN + AI / AI推理网关 / 2026 价值资产</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-white">
+                    DGrid AI (DGAI)<br>
+                    <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">全景投研报告与获利指南</span>
+                </h1>
+                
+                <p class="text-slate-400 text-sm sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    深度解析去中心化 AI 推理的强劲需求，独家拆解 DGAI 代币经济模型，为您提供四大行之有效的核心获利途径与竞争格局对比。
+                </p>
+
+                <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#concept" class="w-full sm:w-auto px-8 h-14 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] flex items-center justify-center space-x-2 text-sm font-semibold shadow-xl shadow-indigo-600/30 transition-all">
+                        <span>阅读投研报告</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#profit" class="w-full sm:w-auto px-8 h-14 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 flex items-center justify-center space-x-2 text-sm font-semibold transition-all">
+                        <span>探索获利路径</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full max-w-5xl mx-auto mt-16 px-4 relative z-10">
+                <div class="glass-panel rounded-2xl p-4 sm:p-6 border border-white/10 bg-[#0F111E]/40 backdrop-blur-xl">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/5 text-xs text-slate-400 font-mono">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+                            <span class="pl-2">REPORT_INDEX.json</span>
+                        </div>
+                        <span class="hidden sm:inline">UPDATED: SEPTEMBER 2026</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 text-left">
+                        <a href="#concept" class="p-3.5 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all group">
+                            <span class="text-xs text-indigo-400 font-mono block mb-1">01 / CONCEPT</span>
+                            <span class="text-sm font-bold text-slate-200 group-hover:text-purple-400 transition-colors">核心定位可视化</span>
+                        </a>
+                        <a href="#dashboard" class="p-3.5 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all group">
+                            <span class="text-xs text-indigo-400 font-mono block mb-1">02 / MARKET DATA</span>
+                            <span class="text-sm font-bold text-slate-200 group-hover:text-purple-400 transition-colors">2026 核心数据看板</span>
+                        </a>
+                        <a href="#tokenomics" class="p-3.5 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all group">
+                            <span class="text-xs text-indigo-400 font-mono block mb-1">03 / TOKENOMICS</span>
+                            <span class="text-sm font-bold text-slate-200 group-hover:text-purple-400 transition-colors">代币分配与捕获</span>
+                        </a>
+                        <a href="#profit" class="p-3.5 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all group">
+                            <span class="text-xs text-emerald-400 font-mono block mb-1">04 / GUIDE</span>
+                            <span class="text-sm font-bold text-slate-200 group-hover:text-emerald-400 transition-colors">四大获利操作指南</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="concept" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-16">
+                <h2 class="text-3xl font-bold tracking-tight text-white">核心定位：AI 界的携程（Ctrip）</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                    DGrid AI 作为智能路由网关，将全球零散、闲置的 GPU 算力聚合，利用 Proof of Quality (PoQ) 机制向开发者提供极具性价比的推理接口。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-4">
+                            <i data-lucide="shuffle" class="w-5 h-5 text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-200 mb-2">智能算力路由</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            无需关心底层具体是哪台服务器在提供算力，一键集成 DGrid AI 统一 API。系统智能分发，成本相比传统云服务商大幅降减。
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-200 mb-2">Proof of Quality (PoQ)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            引入独创质量验证，配合零知识证明（ZK）阻断“节点偷工减料”或“结果伪造”情况，确保算力供给真实可信。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 bg-[#0F111E]/30 relative overflow-hidden flex flex-col justify-between min-h-[460px]">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="space-y-1">
+                            <h4 class="text-base font-bold text-slate-200">去中心化推理网关交互模拟</h4>
+                            <p class="text-xs text-slate-400">点击下方按钮，模拟体验从“需求发起”到“智能路由与 PoQ 检验”全过程</p>
+                        </div>
+                        <button id="btn-run-simulation" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold flex items-center space-x-2 transition-all shadow-md shadow-indigo-600/10">
+                            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                            <span>发起推理请求</span>
+                        </button>
+                    </div>
+
+                    <div class="relative w-full flex-grow flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 py-6">
+                        <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-emerald-500/10 hidden md:block"></div>
+                        
+                        <div id="sim-node-dev" class="relative z-10 w-full md:w-1/4 p-4 rounded-xl bg-[#0B0D17] border border-white/10 text-center flex flex-col items-center justify-center space-y-2 transition-all">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center">
+                                <i data-lucide="user" class="w-5 h-5 text-indigo-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-200">开发者 / 终端用户</span>
+                            <span class="text-[10px] text-slate-400 font-mono">1. 发送推理请求</span>
+                            <div class="absolute -bottom-3 px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[9px] font-mono border border-indigo-500/30">PAY: DGAI</div>
+                        </div>
+
+                        <div id="sim-node-gateway" class="relative z-10 w-full md:w-1/3 p-4 rounded-xl bg-[#0B0D17] border border-white/10 text-center flex flex-col items-center justify-center space-y-2 transition-all">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+                                <i data-lucide="activity" class="w-5 h-5 text-purple-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-200">DGrid AI 智能网关</span>
+                            <span id="sim-status-text" class="text-[10px] text-purple-400 font-mono">2. 智能路由负载均衡中</span>
+                        </div>
+
+                        <div class="relative z-10 w-full md:w-1/3 flex flex-col space-y-3">
+                            <div id="sim-worker-1" class="p-3 rounded-lg bg-[#0B0D17] border border-white/10 flex items-center justify-between transition-all">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="server" class="w-4 h-4 text-slate-400"></i>
+                                    <span class="text-xs text-slate-300">节点 A (RTX 4090)</span>
+                                </div>
+                                <span class="text-[9px] text-slate-500 font-mono">IDLE</span>
+                            </div>
+                            <div id="sim-worker-2" class="p-3 rounded-lg bg-[#0B0D17] border border-white/10 flex items-center justify-between transition-all">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="server" class="w-4 h-4 text-slate-400"></i>
+                                    <span class="text-xs text-slate-300">节点 B (H100)</span>
+                                </div>
+                                <span id="sim-worker-2-status" class="text-[9px] text-slate-500 font-mono">IDLE</span>
+                            </div>
+                            <div id="sim-worker-3" class="p-3 rounded-lg bg-[#0B0D17] border border-white/10 flex items-center justify-between transition-all">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="server" class="w-4 h-4 text-slate-400"></i>
+                                    <span class="text-xs text-slate-300">节点 C (A100)</span>
+                                </div>
+                                <span class="text-[9px] text-slate-500 font-mono">IDLE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                        <span class="flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 text-indigo-400"></i>PoQ 机制采用 ZK 算法在链上瞬时判定</span>
+                        <span id="sim-feedback-val" class="font-mono text-emerald-400">等待触发</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="py-20 bg-gradient-to-b from-transparent via-[#0F111E]/40 to-transparent">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-4 mb-16">
+                    <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+                        <span class="text-xs font-mono font-bold text-emerald-400 tracking-wider">REAL REVENUE & METRICS</span>
+                    </div>
+                    <h2 class="text-3xl font-bold tracking-tight text-white">2026 核心数据看板</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                        拒绝空气叙事！DGrid AI 在代币发售前即具备强大的 B 端造血能力，营收、市值、流动性皆表现抢眼。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 hover-glow flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-indigo-300">2026 上半年真实营收 (B 端)</span>
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white">$<span id="stat-revenue" class="bg-gradient-to-r from-white to-emerald-400 bg-clip-text text-transparent">0</span></div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                核心造血指标。数据源自 B 端企业与 AI 开发者付费调用 API，拥有极其稳固的基本面支撑。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 hover-glow flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-purple-300">代币价格区间 / 市值</span>
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white">$0.72 - $0.78</div>
+                            <div class="text-xs text-slate-300 flex items-center gap-2">
+                                <span>当前流通市值:</span>
+                                <span class="font-mono text-purple-400 font-semibold">约 $1.15 亿 USD</span>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                筹码在大盘震荡期换手充分，具备良好的底部构筑支撑。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 hover-glow flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-sky-300">24小时交易量 / 流动性</span>
+                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                                <i data-lucide="activity" class="w-4 h-4 text-sky-400"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white">$<span id="stat-volume" class="bg-gradient-to-r from-white to-sky-400 bg-clip-text text-transparent">0</span>M+</div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                市场换手率高，交易摩擦小。全网流动性好，适合大资金或机构用户进退。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-white/5 bg-[#0F111E]/20 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-mono">流通供给量</span>
+                        <span class="text-lg font-bold font-mono text-slate-200">1.5 亿 DGAI</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-mono">代币总量上限</span>
+                        <span class="text-lg font-bold font-mono text-slate-200">10 亿 DGAI</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-mono">初始流通比例</span>
+                        <span class="text-lg font-bold font-mono text-slate-200">约 15 %</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-mono">首日交易表现</span>
+                        <span class="text-lg font-bold font-mono text-emerald-400">+93 % (Max)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tokenomics" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-16">
+                <h2 class="text-3xl font-bold tracking-tight text-white">代币经济学互动分配图</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                    DGAI 作为整个推理网络的治理与支付通缩媒介，核心机制包含节点质押罚没、消费返利与投票。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
+                    <div class="relative w-72 h-72">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="transparent" stroke="rgba(255,255,255,0.05)" stroke-width="12"></circle>
+                            
+                            <circle id="arc-node" cx="60" cy="60" r="50" fill="transparent" stroke="#4F46E5" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="157.08" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                            <circle id="arc-community" cx="60" cy="60" r="50" fill="transparent" stroke="#D946EF" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="267.04" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                            <circle id="arc-team" cx="60" cy="60" r="50" fill="transparent" stroke="#10B981" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="298.46" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                            <circle id="arc-seed" cx="60" cy="60" r="50" fill="transparent" stroke="#F59E0B" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="298.46" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                            <circle id="arc-airdrop" cx="60" cy="60" r="50" fill="transparent" stroke="#EC4899" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="311.02" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                            <circle id="arc-liquidity" cx="60" cy="60" r="50" fill="transparent" stroke="#06B6D4" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="314.16" class="cursor-pointer transition-all duration-300 hover:stroke-[14]"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                            <span class="text-xs text-slate-400 font-mono">DGAI TOTAL</span>
+                            <span class="text-2xl font-black text-white font-mono">1,000,000,000</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <span class="text-xs text-slate-400">💡 提示：点击扇区可动态切换右侧具体释放规则与锁仓周期</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <button id="btn-tab-node" class="tokenomics-tab-btn active p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-indigo-400 font-mono">50%</span>
+                            <span class="text-sm font-bold text-slate-200">节点运营商</span>
+                        </button>
+                        <button id="btn-tab-community" class="tokenomics-tab-btn p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-purple-400 font-mono">15%</span>
+                            <span class="text-sm font-bold text-slate-200">社区发展</span>
+                        </button>
+                        <button id="btn-tab-team" class="tokenomics-tab-btn p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-emerald-400 font-mono">10%</span>
+                            <span class="text-sm font-bold text-slate-200">核心团队</span>
+                        </button>
+                        <button id="btn-tab-seed" class="tokenomics-tab-btn p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-amber-500 font-mono">10%</span>
+                            <span class="text-sm font-bold text-slate-200">种子轮投资人</span>
+                        </button>
+                        <button id="btn-tab-airdrop" class="tokenomics-tab-btn p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-pink-400 font-mono">8%</span>
+                            <span class="text-sm font-bold text-slate-200">社区空投</span>
+                        </button>
+                        <button id="btn-tab-liquidity" class="tokenomics-tab-btn p-3 rounded-xl border text-left transition-all">
+                            <span class="text-xs block text-cyan-400 font-mono">7%</span>
+                            <span class="text-sm font-bold text-slate-200">初始流动性</span>
+                        </button>
+                    </div>
+
+                    <div id="tokenomics-detail-card" class="glass-panel p-6 rounded-2xl border border-indigo-500/20 bg-indigo-950/10 min-h-[160px] flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h4 id="token-detail-title" class="text-lg font-bold text-white">50% - 节点运营商与基础设施提供商</h4>
+                                <span id="token-detail-badge" class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-xs font-mono">长期分配</span>
+                            </div>
+                            <p id="token-detail-desc" class="text-slate-300 text-sm leading-relaxed">
+                                10年内线性平滑释放。这部分是代币的最大产出源，用以保障全球去中心化算力节点的长期稳定性及推理请求运行顺畅。
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                            <span>释仓机制: <strong id="token-detail-unlock" class="text-slate-200">10 年线性释放</strong></span>
+                            <span>代币配额: <strong id="token-detail-count" class="text-slate-200">5亿枚 DGAI</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5 bg-[#0F111E]/40">
+                        <h4 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                            <i data-lucide="key" class="w-4 h-4 text-emerald-400"></i>
+                            代币生态价值捕获路径 (Value Capture)
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-400">
+                            <div class="flex items-start space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5"></span>
+                                <div>
+                                    <strong class="text-slate-200 block">支付推理费用</strong>
+                                    开发商调用模型时强制使用 DGAI 充当 Gas 支付，产生源源不断的内生流转买压。
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5"></span>
+                                <div>
+                                    <strong class="text-slate-200 block">节点质押安全保障</strong>
+                                    所有节点必须质押代币。一旦 PoQ 检测其提供劣质、欺诈服务，将执行罚没惩罚（Slashing）。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profit" class="py-20 bg-[#0B0D17] relative">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(217,70,239,0.03),transparent_50%)]"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center space-y-4 mb-16">
+                    <div class="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full">
+                        <span class="text-xs font-mono font-bold text-purple-400 tracking-wider">INVESTMENT STRATEGY</span>
+                    </div>
+                    <h2 class="text-3xl font-bold tracking-tight text-white">投资实操指南：四大获利路径</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                        不管您是拥有高端算力显卡的专业旷工，还是二级市场普通投资者，都能找到最契合自身的获利手段。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="lg:col-span-4 flex flex-col space-y-3">
+                        <button id="path-tab-1" class="path-tab-btn active flex items-center space-x-4 p-4 rounded-xl text-left border transition-all">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 icon-box">
+                                <i data-lucide="server" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-mono block">路径 01 (首选/高收益)</span>
+                                <span class="text-sm font-bold text-slate-200">运行算力节点矿机</span>
+                            </div>
+                        </button>
+
+                        <button id="path-tab-2" class="path-tab-btn flex items-center space-x-4 p-4 rounded-xl text-left border transition-all">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 icon-box">
+                                <i data-lucide="coins" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-mono block">路径 02 (低门槛)</span>
+                                <span class="text-sm font-bold text-slate-200">持币代币 Staking 质押</span>
+                            </div>
+                        </button>
+
+                        <button id="path-tab-3" class="path-tab-btn flex items-center space-x-4 p-4 rounded-xl text-left border transition-all">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 icon-box">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-mono block">路径 03 (中风险)</span>
+                                <span class="text-sm font-bold text-slate-200">二级市场 DCA 定投</span>
+                            </div>
+                        </button>
+
+                        <button id="path-tab-4" class="path-tab-btn flex items-center space-x-4 p-4 rounded-xl text-left border transition-all">
+                            <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 icon-box">
+                                <i data-lucide="gift" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-mono block">路径 04 (零撸空投)</span>
+                                <span class="text-sm font-bold text-slate-200">社区激励与测试网空投</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-8">
+                        <div id="path-content-1" class="path-panel-content glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="server" class="w-5 h-5 text-indigo-400"></i>
+                                    运行算力节点，提供硬件资源 (长期金矿)
+                                </h3>
+                                <span class="px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 text-xs font-semibold">首选策略</span>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                长期获取代币分配总额中高达 50% 的核心出路。如果您有闲置消费级显卡（RTX 3090, 4090）或企业级专业显卡（A100, H100），可直接向官方申请部署客户端并抵押少量 DGAI 开启自动接单挖矿。
+                            </p>
+
+                            <div class="bg-black/80 rounded-xl overflow-hidden border border-white/10 font-mono text-xs shadow-2xl">
+                                <div class="bg-white/5 px-4 py-2 flex items-center justify-between border-b border-white/5">
+                                    <span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="terminal" class="w-3.5 h-3.5"></i>dgai_node_terminal</span>
+                                    <button id="btn-copy-code" class="text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
+                                        <i data-lucide="copy" class="w-3 h-3"></i>
+                                        <span>复制代码</span>
+                                    </button>
+                                </div>
+                                <div class="p-4 space-y-2 text-slate-300">
+                                    <p class="text-slate-500"># 1. 注册 DGrid 节点，绑定接收收益的 Web3 钱包并指定显卡配置</p>
+                                    <p class="text-emerald-400">dgai-node register --wallet 0x71C...3a9 --gpu auto --stake 5000</p>
+                                    <p class="text-slate-500"># 2. 启动节点服务并接入 DGrid AI 生产主网</p>
+                                    <p class="text-emerald-400">dgai-node start --network mainnet --log-level info</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex items-start space-x-3 text-xs text-indigo-300">
+                                <i data-lucide="info" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span>硬件要求：建议显存 ≥ 16GB，高带宽网络上行连接。若 PoQ 检测中途离线或质量出错，将面临少额扣押惩罚。</span>
+                            </div>
+                        </div>
+
+                        <div id="path-content-2" class="path-panel-content hidden glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="coins" class="w-5 h-5 text-purple-400"></i>
+                                    持币 Staking 质押 (无硬件者的理想选择)
+                                </h3>
+                                <span class="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-300 text-xs font-semibold">稳定低风险</span>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                适合不具备优质显卡硬件但依然看好 DGrid 生态前景的持币用户。通过连结官方去中心化应用（DApp），质押代币给信誉度高的验证节点。
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                                    <span class="text-[10px] text-slate-400 font-mono block">基础奖励年化</span>
+                                    <span class="text-2xl font-bold text-purple-400 font-mono">12% - 18%</span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                                    <span class="text-[10px] text-slate-400 font-mono block">额外分红来源</span>
+                                    <span class="text-sm font-bold text-slate-200">API B端营收费用回馈</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                注：提取质押具有 14 天的解锁锁定期，期间代币不享有收益，请投资者做好周期现金流管理。
+                            </p>
+                        </div>
+
+                        <div id="path-content-3" class="path-panel-content hidden glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-5 h-5 text-emerald-400"></i>
+                                    二级市场分批定投 (DCA) 策略
+                                </h3>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 text-xs font-semibold">长线持有</span>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                DGAI 代币在 2026 年下半年上线后，受大盘及散户换手机制，波动十分剧烈。建议长线看好者通过分期、分批、等额的方式买入以平摊初始成本。
+                            </p>
+                            <div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex items-start space-x-3 text-xs text-slate-300">
+                                <i data-lucide="shield" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <strong class="text-white block mb-1">精选支持平台</strong>
+                                    当前主要深度分布于 Gate.io、MEXC、Bitget、Kraken 等，请优先在流动性深厚的交易所平台操作，减免滑点损耗。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="path-content-4" class="path-panel-content hidden glass-panel p-6 rounded-2xl border border-white/10 bg-[#0F111E]/40 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="gift" class="w-5 h-5 text-amber-500"></i>
+                                    零撸空投与社区激励 (低成本创业)
+                                </h3>
+                                <span class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold">无成本参与</span>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                DGrid AI 国库专设 8% 代币（共计 8000 万枚 DGAI）回馈前期及中后期参与活跃的用户。参与测试网压力测试或在 Discord 充当志愿者、参与内容共创等均可获得相应积分奖励。
+                            </p>
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+                                <span class="text-xs font-bold text-slate-200 block">目前可执行空投交互</span>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-2">
+                                        <i data-lucide="check-circle" class="w-4 h-4 text-amber-500"></i>
+                                        <span>加入 Discord & 完成基础验证</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i data-lucide="check-circle" class="w-4 h-4 text-amber-500"></i>
+                                        <span>参与每周测试网压力测试领取积分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-16">
+                <h2 class="text-3xl font-bold tracking-tight text-white">竞品横向对比矩阵</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                    通过高亮真实营收优势，直观呈现 DGrid AI 与 Akash、Render 等传统去中心化算力先锋的垂直定位差异。
+                </p>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-white/10 glass-panel">
+                <table class="w-full text-left border-collapse min-w-[700px]">
+                    <thead>
+                        <tr class="border-b border-white/10 bg-[#0F111E]/80 text-xs uppercase tracking-wider font-mono text-slate-400">
+                            <th class="p-4 pl-6">对比维度</th>
+                            <th class="p-4 bg-indigo-500/5 text-slate-200">DGrid AI (DGAI)</th>
+                            <th class="p-4">Akash Network (AKT)</th>
+                            <th class="p-4">Render Network (RNDR)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-white/5">
+                        <tr>
+                            <td class="p-4 pl-6 font-bold text-slate-300">核心赛道定位</td>
+                            <td class="p-4 bg-indigo-500/5 text-indigo-300 font-medium">去中心化 AI 模型路由 & API 聚合</td>
+                            <td class="p-4 text-slate-400">通用去中心化云计算 (IaaS)</td>
+                            <td class="p-4 text-slate-400">去中心化图像与视频 3D 渲染</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 pl-6 font-bold text-slate-300">核心竞争优势</td>
+                            <td class="p-4 bg-indigo-500/5 text-slate-300">PoQ 校验防作恶，对 B 端开发者最友好</td>
+                            <td class="p-4 text-slate-400">节点网络成熟，CPU/GPU 基础租赁便宜</td>
+                            <td class="p-4 text-slate-400">好莱坞级 3D 渲染合作生态，GPU池庞大</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 pl-6 font-bold text-slate-300">业务成熟度 (2026营收)</td>
+                            <td class="p-4 bg-indigo-500/5 text-emerald-400 font-bold">极高 (上半年营收 2300 万美元)</td>
+                            <td class="p-4 text-slate-400">中等 (主攻纯云算力交易中介费)</td>
+                            <td class="p-4 text-slate-400">较高 (以专业 3D 图形渲染业务为主)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 pl-6 font-bold text-slate-300">DGrid 核心领先优势</td>
+                            <td class="p-4 bg-indigo-500/5 text-slate-300">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-semibold">业务导向型</span>
+                                <span class="block mt-1 text-xs text-slate-400 leading-relaxed">有真实开发者高额续费，估值扎实，非空洞叙事炒作</span>
+                            </td>
+                            <td class="p-4 text-slate-400">Akash 主要提供裸算力租用，开发者仍需手动搭建推理环境，体验稍繁琐</td>
+                            <td class="p-4 text-slate-400">Render 专注于离线图像视频渲染计算，未针对大语言文本生成 AI 进行极速路由优化</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="py-20 bg-gradient-to-t from-transparent via-[#0F111E]/40 to-transparent">
+            <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="alert-triangle" class="w-6 h-6 text-amber-500"></i>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">投资风险提示与安全宣示</h2>
+                <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                    尽管 DGrid AI 的基本面令人振奋，但新兴加密资产投资均含有不容忽视的市场与技术风险，参与前务必进行全面衡量。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left pt-6">
+                    <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2">
+                        <span class="text-xs font-bold text-amber-500 font-mono block">01 / EARLY VOLATILITY</span>
+                        <h4 class="text-sm font-bold text-slate-200">新币早期高波动性</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            二级交易时间尚浅，大盘震荡时筹码容易产生大幅波动，请控制杠杆率并分批入驻。
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2">
+                        <span class="text-xs font-bold text-amber-500 font-mono block">02 / DELIVERY RISK</span>
+                        <h4 class="text-sm font-bold text-slate-200">去中心网络性能瓶颈</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            若未来高并发下 PoQ 出现响应迟滞，可能会对 B 端长期续约和网络口碑产生影响。
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2">
+                        <span class="text-xs font-bold text-amber-500 font-mono block">03 / COMPETITION</span>
+                        <h4 class="text-sm font-bold text-slate-200">赛道竞争加剧红海</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            DePIN+AI 极其火热，新对手源源不断，DGrid 需要时刻维持性价比与极高性能壁垒。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#0B0D17] border-t border-white/5 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <p class="text-xs text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                免责声明：本投研分析材料仅供学术及生态建设参考，不构成任何形式的投资建议、财务规划指引或法律要约。加密资产市场波动频繁，请严格做好个人资产管理与风险把控。
+            </p>
+            <div class="flex justify-center space-x-6 text-slate-400 text-xs">
+                <a href="#" class="hover:text-white transition-colors">官方网站</a>
+                <a href="#" class="hover:text-white transition-colors">技术白皮书</a>
+                <a href="#" class="hover:text-white transition-colors">GitHub 社区</a>
+                <a href="#" class="hover:text-white transition-colors">审计报告</a>
+            </div>
+            <p class="text-[10px] text-slate-600 font-mono">
+                &copy; 2026 DGRID AI RESEARCH LABS. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </footer>
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 glass-panel border border-emerald-500/20 bg-[#0B0D17]/90 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2 translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toast-text" class="text-xs text-slate-200">操作成功</span>
+    </div>
+
+    <script type="module" src="data.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
